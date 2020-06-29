@@ -85,7 +85,23 @@ lemma add_inv_add'''''' {a : R} : a + (-a) + a = a := by simp
 -- ok, nice one
 
 lemma many_adders {a : R} : a + (-a) + (-a) + a + (-a) + (-a) + a + a = 0 := by simp
+-- ok
 
+
+
+lemma zero_add1 {a : R} : 0 + a + 0 + a = a + a := 
+begin 
+    rw add_zero, 
+    rw add_comm,
+    sorry, 
+    /- 
+    I'm having trouble making the commutivity happen in-place
+    simp is good and that, but being unable to place my finger
+    where it wants to be is annoying... what's the solution?
+
+    I call it a day for now :)
+    -/
+end
 
 
 end ring

@@ -1,0 +1,8 @@
+[package]
+name = "rings"
+version = "0.1"
+lean_version = "leanprover-community/lean:3.16.5"
+path = "src"
+
+[dependencies]
+mathlib = {git = "https://github.com/leanprover-community/mathlib", rev = "d3006badc2af402a15537995b1bb97d009e0ded4"}

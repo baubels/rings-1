@@ -93,15 +93,106 @@ lemma zero_add1 {a : R} : 0 + a + 0 + a = a + a :=
 begin 
     rw add_zero, 
     rw add_comm,
-    sorry, 
+    rw ← add_ass,
+    rw add_zero,
     /- 
-    I'm having trouble making the commutivity happen in-place
-    simp is good and that, but being unable to place my finger
-    where it wants to be is annoying... what's the solution?
-
-    I call it a day for now :)
+    I had a bit of trouble being able to move around my cursor
+    I could use simp, but being able to place my finger somewhere would be great
+    Asking on zulip!
     -/
 end
+
+lemma add_left_cancel (a b c : R) (h: a + b = a + c) : b = c :=
+begin 
+calc b = 0 + b          : by rw zero_add
+...    = ((-a) + a) + b : by rw inv_add
+...    = (-a) + (a + b) : by rw add_ass
+...    = (-a) + (a + c) : by rw h
+...    = ((-a) + a) + c : by rw add_ass
+...    = 0 + c          : by rw inv_add
+...    = c              : by rw zero_add
+end
+
+-- can our simp do it?
+attribute [simp] inv_add add_ass zero_add
+
+-- first let's see where it stops doing its thing
+lemma add_left_cancel' (a b c : R) (h: a + b = a + c) : b = c :=
+begin
+    rw ← zero_add b,
+    rw ← inv_add a,
+    rw add_ass,
+    rw h,
+    rw ← add_ass,
+    rw inv_add,
+    rw zero_add,
+end
+
+lemma add_left_cancel'' {a b c : R} (h: a + b = a + c) : b = c :=
+begin
+    rw ← zero_add b,
+    rw ← inv_add a,
+    rw add_ass,
+    rw h,
+    rw ← add_ass,
+    rw inv_add,
+    simp,
+end
+
+lemma add_left_cancel''' {a b c : R} (h: a + b = a + c) : b = c :=
+begin
+    rw ← zero_add b,
+    rw ← inv_add a,
+    rw add_ass,
+    rw h,
+    rw ← add_ass,
+    simp,
+end
+
+-- nope so it can't do association, quite bad
+lemma add_left_cancel'''' {a b c : R} (h: a + b = a + c) : b = c :=
+begin
+    rw ← zero_add b,
+    rw ← inv_add a,
+    rw add_ass,
+    rw h,
+    sorry
+    --simp,
+end
+
+attribute [simp] inv_add add_ass zero_add add_comm
+
+lemma add_left_cancel''''' {a b c : R} (h: a + b = a + c) : b = c :=
+begin
+    rw ← zero_add b,
+    rw ← inv_add a,
+    rw add_ass,
+    rw h,
+    simp [← add_ass],
+end
+
+lemma add_left_cancel'''''' {a b c : R} (h: a + b = a + c) : b = c :=
+begin
+    rw [←zero_add b, ←inv_add a, add_ass, h],
+    simp [← add_ass],
+end
+
+--technically it's quicker like this
+lemma add_left_cancel''''''' {a b c : R} (h: a + b = a + c) : b = c :=
+    by rw [←zero_add b, ←inv_add a, add_ass, h, ←add_ass, inv_add, zero_add]
+
+-- anyways, what's this all about:
+lemma is_this_true {a : R} : a + a = 2 * a :=
+begin
+    -- why did changing input from {} to () let me use add_left_cancel?
+    --rw ← add_zero (2*a), interesting not needed!
+    apply add_left_cancel (-a),
+    rw [←add_ass, inv_add, zero_add, add_comm],
+    -- shit we need to show that -1*a is -a
+    sorry
+end
+
+
 
 
 end ring

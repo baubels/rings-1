@@ -192,8 +192,20 @@ begin
     sorry
 end
 
+lemma right_multiply {a b c : R} (h: a = b) : a*c = b*c :=
+begin 
+    sorry --how do I get the property of the = sign?
+end
 
+theorem zero_multiply (a : R) : 0 * a = 0 :=
+begin
+    sorry
+end
 
+theorem multiply_zero (a : R) : a * 0 = 0 :=
+begin
+    sorry
+end
 
 end ring
 
